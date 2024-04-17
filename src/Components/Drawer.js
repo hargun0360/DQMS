@@ -1,8 +1,9 @@
 import * as React from "react";
-import { View, StyleSheet, Animated, Dimensions } from "react-native";
-import { Appbar, Drawer, Text } from "react-native-paper";
+import { View, StyleSheet, Animated } from "react-native";
+import { Appbar, Drawer } from "react-native-paper";
+import { router } from "expo-router";
 
-const MyComponent = () => {
+const MyDrawer = () => {
   const [isDrawerOpen, setIsDrawerOpen] = React.useState(false);
   const [active, setActive] = React.useState("");
   const drawerAnimation = React.useRef(new Animated.Value(-250)).current;
@@ -34,6 +35,16 @@ const MyComponent = () => {
     });
   };
 
+  const handleNavigation = (newActiveState, route) => {
+    setActive(newActiveState);
+    closeDrawer();
+    if (route) {
+      setTimeout(() => {
+        router.push(route);
+      }, 300); // Wait for the drawer to close before navigating
+    }
+  };
+
   return (
     <View style={{ flex: 1 }}>
       <Appbar.Header>
@@ -50,73 +61,48 @@ const MyComponent = () => {
           <Appbar.Action icon="close" onPress={toggleDrawer} />
           <Appbar.Content title="Qwait" />
         </Appbar.Header>
-        <Drawer.Section>
-          <Drawer.Section showDivider={false}>
-            <Drawer.Item
-              label="Scan Qr/Barcode"
-              icon="barcode-scan"
-              active={active === "first"}
-              onPress={() => {
-                setActive("first");
-                closeDrawer();
-              }}
-            />
-          </Drawer.Section>
+        <Drawer.Section showDivider={false}>
+          <Drawer.Item
+            label="Scan Qr/Barcode"
+            icon="barcode-scan"
+            active={active === "first"}
+            onPress={() => handleNavigation("first")}
+          />
           <Drawer.Item
             label="Service Providers"
             icon="office-building-marker-outline"
             active={active === "second"}
-            onPress={() => {
-              setActive("second");
-              closeDrawer();
-            }}
+            onPress={() => handleNavigation("second", "/home")}
           />
           <Drawer.Item
             label="Maps"
             icon="google-maps"
             active={active === "third"}
-            onPress={() => {
-              setActive("third");
-              closeDrawer();
-            }}
+            onPress={() => handleNavigation("third", "/maps")}
           />
           <Drawer.Item
             label="My Favourite"
             icon="heart"
             active={active === "fourth"}
-            onPress={() => {
-              setActive("fourth");
-              closeDrawer();
-            }}
+            onPress={() => handleNavigation("fourth", "/favorites")}
           />
           <Drawer.Item
             label="Recent Visits"
             icon="history"
             active={active === "fifth"}
-            onPress={() => {
-              setActive("fifth");
-              closeDrawer();
-            }}
+            onPress={() => handleNavigation("fifth", "/recent")}
           />
-        </Drawer.Section>
-        <Drawer.Section showDivider={false}>
           <Drawer.Item
             label="Settings"
             icon="cog"
             active={active === "sixth"}
-            onPress={() => {
-              setActive("sixth");
-              closeDrawer();
-            }}
+            onPress={() => handleNavigation("sixth", "/settings")}
           />
           <Drawer.Item
             label="Help and Feedback"
             icon="help-circle-outline"
             active={active === "seventh"}
-            onPress={() => {
-              setActive("seventh");
-              closeDrawer();
-            }}
+            onPress={() => handleNavigation("seventh", "/help")}
           />
         </Drawer.Section>
       </Animated.View>
@@ -142,4 +128,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default MyComponent;
+export default MyDrawer;
