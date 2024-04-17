@@ -1,11 +1,10 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
+import DraggableMarkerMap from '../src/Components/DraggableMarkerMap'
 
 const maps = () => {
   return (
-    <View>
-      <Text>maps</Text>
-    </View>
+    <DraggableMarkerMap initialLatitude={37.78825} initialLongitude={-122.4324} />
   )
 }
 
