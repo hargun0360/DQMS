@@ -30,13 +30,13 @@ const RootLayout = () => {
     <GestureHandlerRootView style={{ flex: 1 }}>
       <Drawer>
         <Drawer.Screen
-          name="index" 
+          name="index"
           options={{
             drawerLabel: "Index",
             title: "overview",
           }}
         />
-         <Drawer.Screen
+        <Drawer.Screen
           name="scan"
           options={{
             drawerLabel: "Scan Qr/Barcode",
