@@ -9,7 +9,7 @@ import { router } from "expo-router";
 
 const Home = () => {
   const handleCardPress = (cardId) => {
-    router.push(`/home/${cardId}`, { id: cardId });
+    router.push(`/home/${cardId + 1}`, { id: cardId+1 });
   };
   return (
     <ScrollView style={{ flex: 1 }}>

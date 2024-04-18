@@ -13,8 +13,8 @@ const HomeRootLayout = () => {
       <Stack.Screen
         name="[id]"
         options={{
-          headerShown: false,
-          headerTitle: "ID",
+          headerShown: true,
+          headerTitle: "Arora Brothers",
         }}
       />
     </Stack>

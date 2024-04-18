@@ -1,34 +1,32 @@
 import { StyleSheet, Text, View, SafeAreaView } from "react-native";
-import React from "react";
+import React, { useState, useEffect } from "react";
 import MyDrawer from "../src/Components/Drawer";
-import { Slot, Stack } from "expo-router";
+import { Slot, Stack, useSegments } from "expo-router";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { Drawer } from "expo-router/drawer";
 
-// const _layout = () => {
-//   return (
-//     <SafeAreaView style={styles.container}>
-//       <Stack>
-//         <MyDrawer />
-//         <Slot />
-//       </Stack>
-//     </SafeAreaView>
-//   );
-// };
+export const unstable_settings = {
+  initialRouteName: 'home',
+};
 
-// export default _layout;
+const Layout = () => {
 
-// const styles = StyleSheet.create({
-//   container: {
-//     flex: 1,
-//     backgroundColor: "#fff",
-//   },
-// });
+  const [state, setState] = useState(false);
+  const route = useSegments();
+  useEffect(() => {
+    console.log(route);
+    if (route && route.length > 0) {
+      if (route.length == 2 && route[0] == 'home' && route[1] == '[id]') {
+        setState(true);
+      } else {
+        setState(false);
+      }
+    }
+  }, [route]);
 
-const RootLayout = () => {
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
-      <Drawer>
+      <Drawer settings={unstable_settings}>
         <Drawer.Screen
           name="index"
           options={{
@@ -76,4 +74,4 @@ const RootLayout = () => {
   );
 };
 
-export default RootLayout;
+export default Layout;
