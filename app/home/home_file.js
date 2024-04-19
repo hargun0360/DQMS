@@ -15,7 +15,7 @@ const Home = () => {
     <ScrollView style={{ flex: 1 }}>
       {new Array(10).fill().map((_, index) => {
         return (
-          <View  key={index.toString()} style={{ paddingBottom: 5, paddingTop: 5, padding: 12 }}>
+          <View  key={index.toString()} style={{ paddingBottom: 5, paddingTop: 5, padding: 12 ,   marginBottom : 5}}>
             <Card
               onPress={() => handleCardPress(index)}
             />

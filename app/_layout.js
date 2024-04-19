@@ -48,6 +48,13 @@ const Layout = () => {
             title: "All Categories",
           }}
         />
+          <Drawer.Screen
+          name="standing"
+          options={{
+            drawerLabel: "Standing Queues",
+            title: "Standing Queues",
+          }}
+        />
         <Drawer.Screen
           name="my-favourite"
           options={{
