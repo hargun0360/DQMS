@@ -27,9 +27,12 @@
     },
     "plugins": [
       "expo-router",
-      ["expo-barcode-scanner", {
-        "cameraPermission": "Allow $(Qwait) to access camera."
-      }]
+      [
+        "expo-barcode-scanner",
+        {
+          "cameraPermission": "Allow $(Qwait) to access camera."
+        }
+      ]
     ]
   }
 }
