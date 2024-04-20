@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "683636445948",
+    "project_id": "qwait-420812",
+    "storage_bucket": "qwait-420812.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:683636445948:android:03eb41ac6b2ac234567d79",
+        "android_client_info": {
+          "package_name": "com.example.qwait"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCWefZ6g7tIMf_FYUUuo8nawdGtPCjODCA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
