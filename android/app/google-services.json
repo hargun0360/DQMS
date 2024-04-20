@@ -12,7 +12,16 @@
           "package_name": "com.example.qwait"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "683636445948-d8t7i6bomu5tvk34vfl2p5h4da8e287p.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.qwait",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyCWefZ6g7tIMf_FYUUuo8nawdGtPCjODCA"
