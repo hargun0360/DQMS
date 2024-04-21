@@ -1,11 +1,7 @@
-import {
-  StyleSheet,
-  View,
-  ScrollView,
-} from "react-native";
+import {ScrollView, StyleSheet, View,} from "react-native";
 import React from "react";
-import Card from "../../src/Components/Card";
-import { router } from "expo-router";
+import Card from "../../components/Card";
+import {router} from "expo-router";
 
 const Home = () => {
   const handleCardPress = (cardId) => {
