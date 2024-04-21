@@ -1,9 +1,6 @@
 import { SafeAreaView, StyleSheet, Text, View } from "react-native";
 import React from "react";
 import PaymentGateway from "../src/Components/PaymentGateway";
-import { initializeApp, getApps, getApp } from "@firebase/app";
-
-// getApps().length === 0 ? initializeApp(firebaseConfig) : getApp();
 
 const recent = () => {
   return (
