@@ -1,6 +1,6 @@
 import {StyleSheet} from 'react-native'
 import React from 'react'
-import DraggableMarkerMap from '../components/DraggableMarkerMap'
+import DraggableMarkerMap from '../../components/DraggableMarkerMap'
 
 const maps = () => {
     return (

@@ -1,6 +1,6 @@
 import {ScrollView, View} from 'react-native'
 import React from 'react'
-import StandCard from '../components/StandCard'
+import StandCard from '../../components/StandCard'
 
 const standing = () => {
     return (

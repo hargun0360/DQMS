@@ -1,6 +1,6 @@
 import {SafeAreaView, StyleSheet} from "react-native";
 import React from "react";
-import PaymentGateway from "../components/PaymentGateway";
+import PaymentGateway from "../../components/PaymentGateway";
 
 const recent = () => {
     return (

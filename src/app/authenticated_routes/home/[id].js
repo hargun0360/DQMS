@@ -1,9 +1,9 @@
 import {Alert, Image, Pressable, ScrollView, StyleSheet, Text, View,} from "react-native";
 import React from "react";
 import {router, useLocalSearchParams} from "expo-router";
-import shop from "../../../assets/x.jpg";
+import shop from "../../../../assets/x.jpg";
 import RazorpayCheckout from "react-native-razorpay";
-import imagex from "../../../assets/xx.png";
+import imagex from "../../../../assets/xx.png";
 
 const StoreInfo = () => {
     const {id} = useLocalSearchParams();
