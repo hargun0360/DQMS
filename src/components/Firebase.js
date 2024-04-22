@@ -1,7 +1,7 @@
 
 import { initializeApp, getApps, getApp } from "@firebase/app";
 
-const firebaseConfig = {
+export const firebaseConfig = {
   apiKey: "AIzaSyCWefZ6g7tIMf_FYUUuo8nawdGtPCjODCA",
   authDomain: "qwait-420812.firebaseapp.com",
   databaseURL: "https://qwait-420812.firebaseio.com",
@@ -12,5 +12,4 @@ const firebaseConfig = {
   measurementId: "",
 };
 
-app = getApps().length === 0 ? initializeApp(firebaseConfig) : getApp();
-
+// app = getApps().length === 0 ? initializeApp(firebaseConfig) : getApp()
