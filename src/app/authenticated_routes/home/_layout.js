@@ -1,5 +1,6 @@
 import {Stack, usePathname} from "expo-router";
 import React from "react";
+import {Drawer} from "expo-router/drawer";
 
 const HomeRootLayout = () => {
     const pathname = usePathname();
@@ -11,7 +12,7 @@ const HomeRootLayout = () => {
 
     return (
         <>
-            <Stack.Screen
+            <Drawer.Screen
                 options={{
                     headerShown: showParentHeader,
                 }}
