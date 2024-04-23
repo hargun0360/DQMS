@@ -1,37 +1,45 @@
-import React, {useRef, useState} from 'react';
-import {Alert, Image, KeyboardAvoidingView, Platform, StyleSheet, View} from 'react-native';
+import React, {useState} from 'react';
+import {Alert, Image, KeyboardAvoidingView, NativeModules, Platform, StyleSheet, View} from 'react-native';
 import {Button, TextInput} from 'react-native-paper';
 import illus from '../../assets/token.png';
 import {firebaseConfig} from "./Firebase";
 import {getApp, getApps, initializeApp} from "@firebase/app";
-import {NativeModules} from 'react-native';
+import auth from "@react-native-firebase/auth";
+import {router} from "expo-router";
 
 
 app = getApps().length === 0 ? initializeApp(firebaseConfig) : getApp();
+
 const Login = () => {
     const [name, setName] = useState('');
     const [phoneNumber, setPhoneNumber] = useState('');
     const {RecaptchaModule} = NativeModules;
 
-    // const [captchaValidated, setCaptchaValidated] = useState(false);
-    // const recaptchaVerifier = useRef(null);
+    async function requestVerificationCode(phoneNumber) {
+        try {
+            const confirmation = await auth().signInWithPhoneNumber(phoneNumber);
+            Alert.alert("Verification code has been sent to your phone.");
+            router.push("/otp");
+        } catch (error) {
+            console.error("Verification code error:", error);
+            Alert.alert(`Failed to send verification code: ${error.message}`);
+        }
+    }
 
-    // const onVerifyCaptcha = (token) => {a
-    //     setCaptchaValidated(true);
-    // };
-
-    // async function requestVerificationCode() {
-    //     try {
-    //         const phoneProvider = new firebase.auth.PhoneAuthProvider();
-    //         const verificationId = await phoneProvider.verifyPhoneNumber(phoneNumber, recaptchaVerifier.current);
-    //         setCaptchaValidated(false);
-    //         Alert.alert("Verification code has been sent to your phone.");
-    //     } catch (error) {
-    //         console.error("Verification code error:", error);
-    //         Alert.alert(`Failed to send verification code: ${error.message}`);
-    //     }
-    // }
-
+    const handleLogin = (token) => {
+        if (token) {
+            if (name !== '' && phoneNumber !== '') {
+                const phoneRegex = /^\+91\d{10}$/
+                if (phoneRegex.test(phoneNumber)) {
+                    requestVerificationCode(phoneNumber);
+                } else {
+                    setPhoneNumber('+91' + phoneNumber);
+                    const phone = '+91' + phoneNumber;
+                    requestVerificationCode(phone);
+                }
+            }
+        }
+    }
     return (
         <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "padding" : "height"} style={styles.container}>
             <View style={styles.illustrationContainer}>
@@ -54,9 +62,13 @@ const Login = () => {
             />
             <Button
                 mode="contained"
-                onPress={()=> {
-                    RecaptchaModule.createCalendarEvent('testName', 'testLocation');
-                    // RecaptchaModule.createCalendarEvent('testName', 'testLocation');
+                onPress={async () => {
+                    try {
+                        const token = await RecaptchaModule.createCalendarEvent()
+                        handleLogin(token);
+                    } catch (e) {
+                        console.log(e)
+                    }
                 }}
                 style={styles.button}
             >
