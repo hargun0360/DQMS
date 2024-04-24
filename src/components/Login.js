@@ -24,7 +24,7 @@ const Login = () => {
             const confirmation = await auth().signInWithPhoneNumber(phoneNumber);
             dispatch(setConfirm(confirmation));
             Alert.alert("Verification code has been sent to your phone.");
-            router.push({
+            router.replace({
                 pathname: `/otp`,
             });
         } catch (error) {

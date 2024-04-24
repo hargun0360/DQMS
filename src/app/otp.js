@@ -7,6 +7,7 @@ import {getApp, getApps, initializeApp} from "@firebase/app";
 import {firebaseConfig} from "../components/Firebase";
 import {useDispatch, useSelector} from "react-redux";
 import {setConfirm} from "../store/otpSlice/otp_reducer";
+import {router} from "expo-router";
 
 const app = getApps().length === 0 ? initializeApp(firebaseConfig) : getApp();
 
@@ -17,7 +18,6 @@ const OTPScreen = () => {
     const confirm = useSelector((state) => state.otpSlice.confirm);
     const dispatch = useDispatch();
 
-    console.log(confirm);
     const {colors} = useTheme();
 
     useEffect(() => {
@@ -46,7 +46,8 @@ const OTPScreen = () => {
                 .get();
             console.log("User document:", userDocument.data());
             dispatch(setConfirm(null));
-            alert("Phone verification successful and user is logged in.");
+            router.replace('/authenticated_routes');
+            // send message to backend with secret key to check user is logged in or not
         } catch (error) {
             console.error("Error confirming verification code:", error);
             alert(`Invalid verification code: ${error.message}`);
