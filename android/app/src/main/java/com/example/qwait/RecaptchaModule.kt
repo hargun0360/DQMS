@@ -12,7 +12,7 @@ class RecaptchaModule(reactContext: ReactApplicationContext) : ReactContextBaseJ
 
     @ReactMethod
     fun createCalendarEvent(promise: Promise) {
-        Toast.makeText(reactApplicationContext, "A sample toast", Toast.LENGTH_SHORT).show();
+        Toast.makeText(reactApplicationContext, "A sample toast", Toast.LENGTH_SHORT).show()
 
         turnRecaptcha(reactApplicationContext.currentActivity as MainActivity, promise)
     }

@@ -6,20 +6,27 @@ import {firebaseConfig} from "./Firebase";
 import {getApp, getApps, initializeApp} from "@firebase/app";
 import auth from "@react-native-firebase/auth";
 import {router} from "expo-router";
+import {useDispatch, useSelector} from "react-redux";
+import {setConfirm} from "../store/otpSlice/otp_reducer";
 
 
-app = getApps().length === 0 ? initializeApp(firebaseConfig) : getApp();
+const app = getApps().length === 0 ? initializeApp(firebaseConfig) : getApp();
 
 const Login = () => {
     const [name, setName] = useState('');
     const [phoneNumber, setPhoneNumber] = useState('');
     const {RecaptchaModule} = NativeModules;
+    const dispatch = useDispatch();
+    const confirm = useSelector((state) => state.otpSlice.confirm)
 
     async function requestVerificationCode(phoneNumber) {
         try {
             const confirmation = await auth().signInWithPhoneNumber(phoneNumber);
+            dispatch(setConfirm(confirmation));
             Alert.alert("Verification code has been sent to your phone.");
-            router.push("/otp");
+            router.push({
+                pathname: `/otp`,
+            });
         } catch (error) {
             console.error("Verification code error:", error);
             Alert.alert(`Failed to send verification code: ${error.message}`);
@@ -72,7 +79,7 @@ const Login = () => {
                 }}
                 style={styles.button}
             >
-                Verify
+                Submit
             </Button>
         </KeyboardAvoidingView>
     );
