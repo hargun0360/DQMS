@@ -8,6 +8,7 @@ import {firebaseConfig} from "../components/Firebase";
 import {useDispatch, useSelector} from "react-redux";
 import {setConfirm} from "../store/otpSlice/otp_reducer";
 import {router} from "expo-router";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const app = getApps().length === 0 ? initializeApp(firebaseConfig) : getApp();
 
@@ -17,7 +18,18 @@ const OTPScreen = () => {
     const [canResend, setCanResend] = useState(false);
     const confirm = useSelector((state) => state.otpSlice.confirm);
     const dispatch = useDispatch();
-
+    let auth;
+    const getAuth = async () => {
+       auth = await AsyncStorage.getItem("auth");
+    }
+  
+    React.useEffect(() => {
+      getAuth();
+      console.log("hello ", auth);
+      if (auth == "true") {
+        router.replace("/authenticated_routes");
+      }
+    }, [auth]);
     const {colors} = useTheme();
 
     useEffect(() => {
@@ -46,10 +58,12 @@ const OTPScreen = () => {
                 .get();
             console.log("User document:", userDocument.data());
             dispatch(setConfirm(null));
+            AsyncStorage.setItem("auth" , true);
             router.replace('/authenticated_routes');
             // send message to backend with secret key to check user is logged in or not
         } catch (error) {
             console.error("Error confirming verification code:", error);
+            AsyncStorage.setItem("auth" , "false");
             alert(`Invalid verification code: ${error.message}`);
         }
     }
