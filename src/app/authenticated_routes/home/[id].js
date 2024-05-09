@@ -14,12 +14,15 @@ import RazorpayCheckout from "react-native-razorpay";
 import imagex from "../../../../assets/xx.png";
 import { io } from "socket.io-client";
 import { router } from "expo-router";
+import { useSelector } from "react-redux";
 
 const socket = io.connect("https://be19-103-71-79-6.ngrok-free.app");
 
 const StoreInfo = () => {
   const { id } = useLocalSearchParams();
   const razorpay_payment_id = process.env.EXPO_PUBLIC_RZ_PUBLIC_KEY;
+  const name = useSelector((store) => store.otpSlice.name);
+  console.log(name);
 
   React.useEffect(() => {
     console.log("hello");
@@ -56,7 +59,7 @@ const StoreInfo = () => {
   };
 
   const handleModal = () => {
-    Alert.alert("Hey Hargun!", "Are you sure you want to stand in Queue?", [
+    Alert.alert(`Hey ${name}!`, "Are you sure you want to stand in Queue?", [
       {
         text: "Cancel",
         onPress: () => console.log("Cancel Pressed"),

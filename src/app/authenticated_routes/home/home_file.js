@@ -3,13 +3,16 @@ import React from "react";
 import Card from "../../../components/Card";
 import { router } from "expo-router";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-
+import { useSelector } from "react-redux";
 
 const Home = () => {
-    let auth;
+  let auth;
   const getAuth = async () => {
-     auth = await AsyncStorage.getItem("auth");
-  }
+    auth = await AsyncStorage.getItem("auth");
+  };
+
+  const state = useSelector((store) => store.location);
+  console.log(state);
 
   React.useEffect(() => {
     getAuth();

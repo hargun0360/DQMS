@@ -23,28 +23,30 @@ export default function index() {
     })();
   }, []);
 
-  console.log(location?.coords);
+  // console.log(location?.coords?.latitude, " ", location?.coords?.longitude);
 
   const dispatch = useDispatch();
 
   React.useEffect(() => {
-    if (location) {
+    if (location?.coords) {
       let data = {
         latitude: location?.coords?.latitude,
         longitude: location?.coords?.longitude,
       };
-      dispatch(addLocation(data));
+      // console.log(data);
+
+      dispatch(addLocation({ latitude: 40.7128, longitude: -74.006 }));
     }
   }, [location]);
 
   let auth;
   const getAuth = async () => {
     auth = await AsyncStorage.getItem("auth");
-  };
+  }; 
 
   React.useEffect(() => {
     getAuth();
-    console.log("hello ", auth);
+    // console.log("hello ", auth);
     if (auth == "true") {
       router.replace("/authenticated_routes");
     }
