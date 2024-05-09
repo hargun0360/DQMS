@@ -11,12 +11,11 @@ const Home = () => {
     auth = await AsyncStorage.getItem("auth");
   };
 
-  const state = useSelector((store) => store.location);
+  const state = useSelector((store) => store.otpSlice.location);
   console.log(state);
 
   React.useEffect(() => {
     getAuth();
-    console.log("hello ", auth);
     if (auth == "true") {
       router.replace("/authenticated_routes");
     }

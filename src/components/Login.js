@@ -81,7 +81,7 @@ const Login = () => {
       />
       <Button
         mode="contained"
-        buttonColor="blue"
+        buttonColor="#4287f5"
         onPress={async () => {
           try {
             const token = await RecaptchaModule.createCalendarEvent();

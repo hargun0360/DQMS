@@ -89,6 +89,7 @@ const OTPScreen = () => {
             />
             <Button
                 mode="contained"
+                buttonColor="#4287f5"
                 onPress={confirmVerificationCode}
                 disabled={otp.length !== 6}
                 style={styles.button}

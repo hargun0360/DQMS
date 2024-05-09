@@ -2,7 +2,11 @@ import {createSlice} from "@reduxjs/toolkit";
 
 const initialState = {
     confirm : null,
-    name : ''
+    name : '',
+    location : {
+        latitude: null,
+        longitude: null,
+    }
 }
 
 export const otpSlice = createSlice({
@@ -16,8 +20,12 @@ export const otpSlice = createSlice({
             console.log(state , action);
             state.name = action.payload;
         },
+        addLocation: (state, action) => {
+            state.location.latitude = action?.payload?.latitude;
+            state.location.longitude = action?.payload?.longitude;
+          },
     },
 })
 
-export const {setConfirm , addUser} = otpSlice.actions;
+export const {setConfirm , addUser , addLocation} = otpSlice.actions;
 export default otpSlice.reducer;

@@ -4,7 +4,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { router } from "expo-router";
 import * as Location from "expo-location";
 import { useDispatch } from "react-redux";
-import { addLocation } from "../store/otpSlice/location";
+import { addLocation } from "../store/otpSlice/otp_reducer";
 
 export default function index() {
   const [location, setLocation] = useState(null);
@@ -23,8 +23,6 @@ export default function index() {
     })();
   }, []);
 
-  // console.log(location?.coords?.latitude, " ", location?.coords?.longitude);
-
   const dispatch = useDispatch();
 
   React.useEffect(() => {
@@ -33,9 +31,7 @@ export default function index() {
         latitude: location?.coords?.latitude,
         longitude: location?.coords?.longitude,
       };
-      // console.log(data);
-
-      dispatch(addLocation({ latitude: 40.7128, longitude: -74.006 }));
+      dispatch(addLocation(data));
     }
   }, [location]);
 
