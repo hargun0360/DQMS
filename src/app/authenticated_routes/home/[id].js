@@ -16,7 +16,7 @@ import { io } from "socket.io-client";
 import { router } from "expo-router";
 import { useSelector } from "react-redux";
 
-const socket = io.connect("https://be19-103-71-79-6.ngrok-free.app");
+const socket = io.connect(process.env.BASE_URL);
 
 const StoreInfo = () => {
   const { id } = useLocalSearchParams();

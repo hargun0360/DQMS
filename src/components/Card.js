@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   StyleSheet,
   Text,
@@ -9,40 +9,100 @@ import {
 } from "react-native";
 import icon from "../../assets/x.jpg";
 import { AntDesign } from "@expo/vector-icons";
+import { useSelector } from "react-redux";
+import moment from "moment";
+import "moment-duration-format";
 
-const Card = ({ onPress }) => {
+function calculateDistance(lat1, lon1, lat2, lon2) {
+  const earthRadiusKm = 6371;
+
+  const degToRad = (deg) => (deg * Math.PI) / 180;
+
+  const lat1Rad = degToRad(parseFloat(lat1));
+  const lat2Rad = degToRad(parseFloat(lat2));
+  const dLat = degToRad(parseFloat(lat2) - parseFloat(lat1));
+  const dLon = degToRad(parseFloat(lon2) - parseFloat(lon1));
+
+  const a =
+    Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+    Math.cos(lat1Rad) *
+      Math.cos(lat2Rad) *
+      Math.sin(dLon / 2) *
+      Math.sin(dLon / 2);
+
+  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+
+  return earthRadiusKm - (earthRadiusKm - c);
+}
+
+const Card = ({img ,  data, onPress }) => {
+  const location = useSelector((store) => store.otpSlice.location);
+
+  const customers = data.counters.reduce(
+    (acc, counter) => acc + counter.customers.length,
+    0
+  );
+
+  const waitingTime = Math.min(
+    ...data.counters.map((counter) => counter.avgTimePerPerson)
+  );
+
+  const distance = calculateDistance(
+    location.latitude,
+    location.longitude,
+    data.latitude,
+    data.longitude
+  );
+
+  const [timer, setTimer] = useState(waitingTime * 60); // Convert minutes to seconds
+
   const [favourite, setFavorite] = useState(false);
   const toggleFavorite = () => setFavorite(!favourite);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setTimer((prevTimer) => (prevTimer > 0 ? prevTimer - 1 : 0));
+    }, 1000);
+    return () => clearInterval(interval);
+  }, []);
+
+  const formattedTimer = moment
+    .utc(moment.duration(timer, "seconds").asMilliseconds())
+    .format("HH:mm:ss");
+
   return (
     <View style={styles.cardContainer}>
       <Pressable onPress={onPress}>
         <View style={styles.imageContainer}>
-          <Image source={icon} style={styles.imageAvatar} />
+          <Image source={img} style={styles.imageAvatar} />
         </View>
       </Pressable>
       <View style={styles.infoContainer}>
         <Pressable onPress={onPress}>
-          <Text style={styles.storeName}>TAD Bandar Baru Bangi</Text>
-          <Text style={styles.storeAddress}>Bandar Baru Bangi, Selangor</Text>
+          <Text style={styles.storeName}>{data.storeName}</Text>
+          <Text style={styles.storeAddress}>{data.address}</Text>
         </Pressable>
-        <TouchableOpacity style={styles.heartContainer} onPress={toggleFavorite}>
-        {favourite ? (
-          <AntDesign name="heart" size={18} color="red" />
-        ) : (
-          <AntDesign name="hearto" size={18} color="black" />
-        )}
-      </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.heartContainer}
+          onPress={toggleFavorite}
+        >
+          {favourite ? (
+            <AntDesign name="heart" size={18} color="red" />
+          ) : (
+            <AntDesign name="hearto" size={18} color="black" />
+          )}
+        </TouchableOpacity>
         <View style={styles.detailsContainer}>
           <View style={styles.detailBox}>
-            <Text style={styles.detailText}>0</Text>
+            <Text style={styles.detailText}>{customers}</Text>
             <Text style={styles.detailLabel}>Customers</Text>
           </View>
           <View style={styles.detailBox}>
-            <Text style={styles.detailText}>0</Text>
+            <Text style={styles.detailText}>{formattedTimer}</Text>
             <Text style={styles.detailLabel}>Waiting Time</Text>
           </View>
           <View style={styles.detailBox}>
-            <Text style={styles.detailText}>10.3 km</Text>
+            <Text style={styles.detailText}>{`${distance.toFixed(2)}`} km</Text>
             <Text style={styles.detailLabel}>Distance</Text>
           </View>
         </View>
@@ -74,10 +134,10 @@ const styles = StyleSheet.create({
     borderRadius: 25,
   },
   heartContainer: {
-    position: 'absolute',
+    position: "absolute",
     top: 0,
     right: 2,
-    padding: 4, 
+    padding: 4,
   },
   infoContainer: {
     flex: 1,
